@@ -29,7 +29,7 @@ export const handler: Handlers['TemplateSelector'] = async (input, { logger, emi
   const templateType = input.templateType
 
   // Load template configuration
-  const templateConfig = {
+  let templateConfig = {
     name: 'social',
     workflows: [
       'UserSignupFlow',
@@ -48,6 +48,25 @@ export const handler: Handlers['TemplateSelector'] = async (input, { logger, emi
       { method: 'PUT', path: '/api/posts/:id', workflow: 'UpdateEntityFlow', description: 'Update a post' },
       { method: 'DELETE', path: '/api/posts/:id', workflow: 'DeleteEntityFlow', description: 'Delete a post' },
     ],
+  }
+
+  if (templateType === 'ecommerce') {
+    templateConfig = {
+      name: 'ecommerce',
+      workflows: [
+        'ProductCatalog',
+        'OrderProcessing',
+        'UserSignupFlow', // Reusing user signup for customers
+        'BackgroundProcessingFlow',
+        'RetryAndFailureHandlingFlow',
+        'ScheduledAnalyticsFlow',
+      ],
+      endpoints: [
+        { method: 'POST', path: '/api/products', workflow: 'ProductCatalog', description: 'Add a new product' },
+        { method: 'POST', path: '/api/orders', workflow: 'OrderProcessing', description: 'Place a new order' },
+        { method: 'POST', path: '/api/users', workflow: 'UserSignupFlow', description: 'Register a customer' },
+      ],
+    }
   }
 
   logger.info('✅ Template selected', { template: templateConfig.name })

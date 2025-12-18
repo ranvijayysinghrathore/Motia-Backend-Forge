@@ -18,6 +18,8 @@ declare module 'motia' {
     'GetEntities': ApiRouteHandler<Record<string, unknown>, ApiResponse<200, { posts: Array<{ id: string; title: string; content: string; authorId: string; createdAt: string }>; count: number }>, never>
     'CreateEntity': ApiRouteHandler<{ title: string; content: string; authorId: string }, ApiResponse<201, { id: string; title: string; content: string; authorId: string; createdAt: string }> | ApiResponse<400, { error: string }>, { topic: 'entity.created'; data: { entityId: string; entityType: string; authorId: string } }>
     'BackgroundProcessor': EventHandler<{ entityId: string; entityType: string; authorId: string }, never>
+    'ProductCatalog': ApiRouteHandler<{ name: string; price: number; description: string; stock: unknown }, ApiResponse<201, { id: string; name: string; price: number }>, never>
+    'OrderProcessing': ApiRouteHandler<{ items: Array<{ productId: string; quantity: number }>; customerId: string }, ApiResponse<201, { orderId: string; status: string; total: number }>, never>
     'StateAuditJob': CronHandler<{ topic: 'notification'; data: { templateId: string; email: string; templateData: Record<string, unknown> } }>
     'ProcessFoodOrder': EventHandler<{ email: string; quantity: number; petId: string }, { topic: 'notification'; data: { templateId: string; email: string; templateData: Record<string, unknown> } }>
     'Notification': EventHandler<{ templateId: string; email: string; templateData: Record<string, unknown> }, never>

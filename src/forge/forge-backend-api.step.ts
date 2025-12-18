@@ -50,17 +50,28 @@ export const handler: Handlers['ForgeBackendApi'] = async (req, { logger, emit, 
     const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
     const deployUrl = baseUrl // In platform mode, deployed URL is the base URL
 
+    const d = req.body.description.toLowerCase()
+    let endpoints = [
+      'POST /api/users',
+      'POST /api/posts',
+      'GET /api/posts',
+      'PUT /api/posts/:id',
+      'DELETE /api/posts/:id',
+    ]
+
+    if (d.includes('shop') || d.includes('store') || d.includes('buy') || d.includes('sell') || d.includes('product') || d.includes('e-commerce') || d.includes('ecommerce')) {
+      endpoints = [
+        'POST /api/products',
+        'POST /api/orders',
+        'POST /api/users',
+      ]
+    }
+
     return {
       status: 200,
       body: {
         backendUrl: deployUrl,
-        endpoints: [
-          'POST /api/users',
-          'POST /api/posts',
-          'GET /api/posts',
-          'PUT /api/posts/:id',
-          'DELETE /api/posts/:id',
-        ],
+        endpoints,
         backendId,
       },
     }

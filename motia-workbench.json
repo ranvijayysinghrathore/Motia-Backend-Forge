@@ -18,15 +18,6 @@
     }
   },
   {
-    "id": "user-management",
-    "config": {
-      "src\\templates\\user-signup.step.ts": {
-        "x": -39,
-        "y": -45
-      }
-    }
-  },
-  {
     "id": "basic-tutorial",
     "config": {
       "src\\petstore\\state-audit-cron.step.ts": {
@@ -82,6 +73,28 @@
       "src\\forge\\ai-intent-parser.step.ts": {
         "x": 431,
         "y": -104
+      }
+    }
+  },
+  {
+    "id": "user-management",
+    "config": {
+      "src\\templates\\user-signup.step.ts": {
+        "x": -21,
+        "y": -135
+      }
+    }
+  },
+  {
+    "id": "ecommerce-core",
+    "config": {
+      "src\\templates\\ecommerce\\product-catalog.step.ts": {
+        "x": 0,
+        "y": 0
+      },
+      "src\\templates\\ecommerce\\order-processing.step.ts": {
+        "x": -419,
+        "y": 29
       }
     }
   }

@@ -49,8 +49,11 @@ export const handler: Handlers['AIIntentParser'] = async (input, { logger, emit 
     features.push('notifications')
   }
 
-  // Determine template type (MVP: only social template)
-  const templateType = 'social'
+  // Determine template type
+  let templateType = 'social'
+  if (description.includes('shop') || description.includes('store') || description.includes('buy') || description.includes('sell') || description.includes('product') || description.includes('e-commerce') || description.includes('ecommerce')) {
+    templateType = 'ecommerce'
+  }
 
   const intent = {
     entities,
