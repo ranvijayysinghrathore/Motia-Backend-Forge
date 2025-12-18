@@ -29,20 +29,20 @@ export const handler: Handlers['CloudDeployer'] = async (input, { logger, emit, 
 
   const { backendId, metadata } = input
 
-  // Simulate deployment process
-  // In production, this would:
-  // 1. Create a new Motia project structure
-  // 2. Write workflow files
-  // 3. Execute: motia deploy
-  // 4. Wait for deployment completion
-  // 5. Capture the deployed URL
+  // Determine Base URL (Production Platform Strategy)
+  // If running in production (e.g. strict Motia Cloud), use provided base URL
+  // Otherwise default to localhost for local platform testing
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+  
+  // In our Platform model, the generated backend is hosted on the main platform
+  // The URL is simply the base URL (since we share the global router in this MVP)
+  // In a full multi-tenant version, this might be `${baseUrl}/backends/${backendId}`
+  const deployedUrl = baseUrl
 
-  // For MVP, we'll simulate this with a delay
-  await new Promise(resolve => setTimeout(resolve, 1000))
+  // Simulate "deployment" time (registration overhead)
+  await new Promise(resolve => setTimeout(resolve, 1500))
 
-  const deployedUrl = `https://${backendId}.motia.cloud`
-
-  // Update backend metadata with deployment info
+  // Update backend metadata
   const updatedMetadata = {
     ...metadata,
     status: 'deployed',
@@ -52,9 +52,10 @@ export const handler: Handlers['CloudDeployer'] = async (input, { logger, emit, 
 
   await state.set('backends', backendId, updatedMetadata)
 
-  logger.info('✅ Backend deployed successfully', { 
+  logger.info('✅ Backend deployed successfully (Platform Mode)', { 
     backendId,
     url: deployedUrl,
+    environment: process.env.NODE_ENV || 'development'
   })
 
   // Emit deployment complete

@@ -12,6 +12,7 @@ export const config: EventConfig = {
     error: z.string(),
     retryCount: z.number().optional(),
   }),
+  emits: [],
 }
 
 export const handler: Handlers['RetryHandler'] = async (input, { logger, state }) => {

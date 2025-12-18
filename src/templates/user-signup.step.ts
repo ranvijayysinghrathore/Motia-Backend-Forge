@@ -7,7 +7,7 @@ export const config: ApiRouteConfig = {
   description: 'User registration endpoint (template workflow)',
   flows: ['user-management'],
   method: 'POST',
-  path: '/users',
+  path: '/api/users',
   bodySchema: z.object({
     email: z.string().email(),
     password: z.string().min(8),

@@ -42,11 +42,11 @@ export const handler: Handlers['TemplateSelector'] = async (input, { logger, emi
       'ScheduledAnalyticsFlow',
     ],
     endpoints: [
-      { method: 'POST', path: '/users', workflow: 'UserSignupFlow', description: 'Create a new user' },
-      { method: 'POST', path: '/posts', workflow: 'CreateEntityFlow', description: 'Create a new post' },
-      { method: 'GET', path: '/posts', workflow: 'GetEntitiesFlow', description: 'Get all posts' },
-      { method: 'PUT', path: '/posts/:id', workflow: 'UpdateEntityFlow', description: 'Update a post' },
-      { method: 'DELETE', path: '/posts/:id', workflow: 'DeleteEntityFlow', description: 'Delete a post' },
+      { method: 'POST', path: '/api/users', workflow: 'UserSignupFlow', description: 'Create a new user' },
+      { method: 'POST', path: '/api/posts', workflow: 'CreateEntityFlow', description: 'Create a new post' },
+      { method: 'GET', path: '/api/posts', workflow: 'GetEntitiesFlow', description: 'Get all posts' },
+      { method: 'PUT', path: '/api/posts/:id', workflow: 'UpdateEntityFlow', description: 'Update a post' },
+      { method: 'DELETE', path: '/api/posts/:id', workflow: 'DeleteEntityFlow', description: 'Delete a post' },
     ],
   }
 

@@ -1,60 +1,10 @@
 [
   {
-    "id": "basic-tutorial",
-    "config": {
-      "src\\petstore\\state-audit-cron.step.ts": {
-        "x": 190,
-        "y": -5
-      },
-      "src\\petstore\\process-food-order.step.ts": {
-        "x": 226,
-        "y": 219
-      },
-      "src\\petstore\\notification.step.ts": {
-        "x": 576,
-        "y": 141
-      },
-      "src\\petstore\\api.step.ts": {
-        "x": -131,
-        "y": 178
-      }
-    }
-  },
-  {
     "id": "entity-management",
     "config": {
       "src\\templates\\create-entity.step.ts": {
         "x": 0,
         "y": 0
-      }
-    }
-  },
-  {
-    "id": "forge-backend",
-    "config": {
-      "src\\forge\\workflow-registrar.step.ts": {
-        "x": 1400,
-        "y": 34
-      },
-      "src\\forge\\workflow-assembler.step.ts": {
-        "x": 1050,
-        "y": 34
-      },
-      "src\\forge\\template-selector.step.ts": {
-        "x": 700,
-        "y": 34
-      },
-      "src\\forge\\forge-backend-api.step.ts": {
-        "x": 0,
-        "y": 0
-      },
-      "src\\forge\\cloud-deployer.step.ts": {
-        "x": 1750,
-        "y": 44
-      },
-      "src\\forge\\ai-intent-parser.step.ts": {
-        "x": 350,
-        "y": 34
       }
     }
   },
@@ -73,6 +23,65 @@
       "src\\templates\\user-signup.step.ts": {
         "x": -39,
         "y": -45
+      }
+    }
+  },
+  {
+    "id": "basic-tutorial",
+    "config": {
+      "src\\petstore\\state-audit-cron.step.ts": {
+        "x": 130,
+        "y": -127
+      },
+      "src\\petstore\\process-food-order.step.ts": {
+        "x": 226,
+        "y": 219
+      },
+      "src\\petstore\\notification.step.ts": {
+        "x": 678,
+        "y": -9
+      },
+      "src\\petstore\\api.step.ts": {
+        "x": -241,
+        "y": 95
+      }
+    }
+  },
+  {
+    "id": "error-handling",
+    "config": {
+      "src\\templates\\retry-handler.step.ts": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "forge-backend",
+    "config": {
+      "src\\forge\\workflow-registrar.step.ts": {
+        "x": 1091,
+        "y": 136
+      },
+      "src\\forge\\workflow-assembler.step.ts": {
+        "x": 1080,
+        "y": -101
+      },
+      "src\\forge\\template-selector.step.ts": {
+        "x": 431,
+        "y": 140
+      },
+      "src\\forge\\forge-backend-api.step.ts": {
+        "x": -226,
+        "y": 10
+      },
+      "src\\forge\\cloud-deployer.step.ts": {
+        "x": 1799,
+        "y": -6
+      },
+      "src\\forge\\ai-intent-parser.step.ts": {
+        "x": 431,
+        "y": -104
       }
     }
   }

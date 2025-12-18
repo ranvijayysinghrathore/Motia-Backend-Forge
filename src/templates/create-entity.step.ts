@@ -7,7 +7,7 @@ export const config: ApiRouteConfig = {
   description: 'Generic entity creation endpoint (template workflow)',
   flows: ['entity-management'],
   method: 'POST',
-  path: '/posts',
+  path: '/api/posts',
   bodySchema: z.object({
     title: z.string().min(1),
     content: z.string().min(1),

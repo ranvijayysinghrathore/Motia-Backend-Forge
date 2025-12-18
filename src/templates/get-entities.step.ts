@@ -7,7 +7,7 @@ export const config: ApiRouteConfig = {
   description: 'Get all entities endpoint (template workflow)',
   flows: ['entity-management'],
   method: 'GET',
-  path: '/posts',
+  path: '/api/posts',
   responseSchema: {
     200: z.object({
       posts: z.array(z.object({
@@ -20,6 +20,7 @@ export const config: ApiRouteConfig = {
       count: z.number(),
     }),
   },
+  emits: [],
 }
 
 export const handler: Handlers['GetEntities'] = async (req, { logger, state }) => {

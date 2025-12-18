@@ -46,18 +46,20 @@ export const handler: Handlers['ForgeBackendApi'] = async (req, { logger, emit, 
 
     logger.info('✅ Emitted project.description.received event', { backendId })
 
-    // For now, return a mock response
-    // In production, this would wait for the workflow to complete
+    // For now, return the platform URL (since we host it)
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+    const deployUrl = baseUrl // In platform mode, deployed URL is the base URL
+
     return {
       status: 200,
       body: {
-        backendUrl: `https://${backendId}.motia.cloud`,
+        backendUrl: deployUrl,
         endpoints: [
-          'POST /users',
-          'POST /posts',
-          'GET /posts',
-          'PUT /posts/:id',
-          'DELETE /posts/:id',
+          'POST /api/users',
+          'POST /api/posts',
+          'GET /api/posts',
+          'PUT /api/posts/:id',
+          'DELETE /api/posts/:id',
         ],
         backendId,
       },

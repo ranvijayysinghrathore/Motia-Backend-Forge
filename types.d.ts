@@ -13,6 +13,9 @@ declare module 'motia' {
 
   interface Handlers {
     'UserSignup': ApiRouteHandler<{ email: string; password: string; name: string }, ApiResponse<201, { id: string; email: string; name: string; createdAt: string }> | ApiResponse<400, { error: string }>, never>
+    'ScheduledAnalytics': CronHandler<never>
+    'RetryHandler': EventHandler<{ taskId: string; error: string; retryCount?: number }, never>
+    'GetEntities': ApiRouteHandler<Record<string, unknown>, ApiResponse<200, { posts: Array<{ id: string; title: string; content: string; authorId: string; createdAt: string }>; count: number }>, never>
     'CreateEntity': ApiRouteHandler<{ title: string; content: string; authorId: string }, ApiResponse<201, { id: string; title: string; content: string; authorId: string; createdAt: string }> | ApiResponse<400, { error: string }>, { topic: 'entity.created'; data: { entityId: string; entityType: string; authorId: string } }>
     'BackgroundProcessor': EventHandler<{ entityId: string; entityType: string; authorId: string }, never>
     'StateAuditJob': CronHandler<{ topic: 'notification'; data: { templateId: string; email: string; templateData: Record<string, unknown> } }>

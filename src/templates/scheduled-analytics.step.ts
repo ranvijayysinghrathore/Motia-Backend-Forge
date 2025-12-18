@@ -5,7 +5,8 @@ export const config: CronConfig = {
   name: 'ScheduledAnalytics',
   description: 'Scheduled analytics task (template workflow)',
   flows: ['scheduled-tasks'],
-  schedule: '0 0 * * *', // Daily at midnight
+  cron: '0 0 * * *', // Daily at midnight
+  emits: [],
 }
 
 export const handler: Handlers['ScheduledAnalytics'] = async (event, { logger, state }) => {

@@ -20,7 +20,14 @@ function ResultScreen({ result, onReset }) {
         <div className="backend-url-section">
           <p className="section-label">Your backend is running at:</p>
           <div className="url-box">
-            <code className="backend-url">{result.backendUrl}</code>
+            <a 
+              href={result.backendUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="backend-url-link"
+            >
+              {result.backendUrl}
+            </a>
             <button 
               className="btn-copy"
               onClick={handleCopy}
