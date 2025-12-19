@@ -16,6 +16,7 @@ export const config: EventConfig = {
       endpointDetails: z.array(z.any()),
       createdAt: z.string(),
       status: z.string(),
+      baseUrl: z.string(), // Added
     }),
     traceId: z.string(),
   }),
@@ -29,15 +30,8 @@ export const handler: Handlers['CloudDeployer'] = async (input, { logger, emit, 
 
   const { backendId, metadata } = input
 
-  // Determine Base URL (Production Platform Strategy)
-  // If running in production (e.g. strict Motia Cloud), use provided base URL
-  // Otherwise default to localhost for local platform testing
-  const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
-  
-  // In our Platform model, the generated backend is hosted on the main platform
-  // The URL is simply the base URL (since we share the global router in this MVP)
-  // In a full multi-tenant version, this might be `${baseUrl}/backends/${backendId}`
-  const deployedUrl = baseUrl
+  // Use the baseUrl carried through the workflow
+  const deployedUrl = metadata.baseUrl
 
   // Simulate "deployment" time (registration overhead)
   await new Promise(resolve => setTimeout(resolve, 1500))

@@ -22,6 +22,7 @@ export const config: EventConfig = {
     features: z.array(z.string()),
     backendId: z.string(),
     traceId: z.string(),
+    baseUrl: z.string(), // Added
   }),
   emits: ['workflows.assembled'],
 }
@@ -63,6 +64,7 @@ export const handler: Handlers['WorkflowAssembler'] = async (input, { logger, em
       endpointDetails: template.endpoints,
       backendId,
       traceId: input.traceId,
+      baseUrl: input.baseUrl, // Pass along
     },
   })
 }

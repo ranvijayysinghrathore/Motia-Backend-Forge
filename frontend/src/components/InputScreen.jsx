@@ -1,49 +1,33 @@
 function InputScreen({ description, setDescription, onGenerate, error }) {
   return (
-    <div className="input-screen">
+    <div className="input-screen fade-in">
       <div className="content">
-        <div className="header">
-          <h1 className="title">
-            <span className="gradient-text">Motia Backend Forge</span>
-          </h1>
-          <p className="subtitle">
-            Describe your app and get a running backend instantly
-          </p>
-        </div>
+        <h1 className="title">
+          A New Paradigm in <br />
+          <span className="gradient-text">Backend Engineering</span>
+        </h1>
+        <p className="subtitle">
+          Describe your application and let Motia Forge assemble, 
+          register, and deploy your entire backend infrastructure in seconds.
+        </p>
 
         <div className="input-section">
           <textarea
             className="description-input"
-            placeholder="Example: A simple app with users, posts, and comments"
+            placeholder="e.g., A SaaS platform with organizations, or a Project Management tool with task boards..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            rows={4}
           />
           
-          {error && <p className="error-message">{error}</p>}
+          {error && <p style={{ color: '#ef4444', marginBottom: '16px', fontSize: '0.9rem' }}>{error}</p>}
 
           <button 
             className="btn-primary btn-large"
             onClick={onGenerate}
             disabled={!description.trim()}
           >
-            Generate Backend
+            Forge Infrastructure
           </button>
-        </div>
-
-        <div className="features">
-          <div className="feature">
-            <span className="feature-icon">⚡</span>
-            <span>Instant Deployment</span>
-          </div>
-          <div className="feature">
-            <span className="feature-icon">🔄</span>
-            <span>Background Jobs</span>
-          </div>
-          <div className="feature">
-            <span className="feature-icon">📊</span>
-            <span>Scheduled Tasks</span>
-          </div>
         </div>
       </div>
     </div>

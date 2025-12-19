@@ -14,6 +14,7 @@ export const config: EventConfig = {
     originalDescription: z.string(),
     backendId: z.string(),
     traceId: z.string(),
+    baseUrl: z.string(), // Added
   }),
   emits: ['template.selected'],
 }
@@ -53,18 +54,39 @@ export const handler: Handlers['TemplateSelector'] = async (input, { logger, emi
   if (templateType === 'ecommerce') {
     templateConfig = {
       name: 'ecommerce',
-      workflows: [
-        'ProductCatalog',
-        'OrderProcessing',
-        'UserSignupFlow', // Reusing user signup for customers
-        'BackgroundProcessingFlow',
-        'RetryAndFailureHandlingFlow',
-        'ScheduledAnalyticsFlow',
-      ],
+      workflows: ['ProductCatalog', 'OrderProcessing', 'UserSignupFlow', 'BackgroundProcessingFlow'],
       endpoints: [
         { method: 'POST', path: '/api/products', workflow: 'ProductCatalog', description: 'Add a new product' },
         { method: 'POST', path: '/api/orders', workflow: 'OrderProcessing', description: 'Place a new order' },
         { method: 'POST', path: '/api/users', workflow: 'UserSignupFlow', description: 'Register a customer' },
+      ],
+    }
+  } else if (templateType === 'saas') {
+    templateConfig = {
+      name: 'saas',
+      workflows: ['OrganizationManager', 'UserSignupFlow', 'BillingSync', 'UsageTracker'],
+      endpoints: [
+        { method: 'POST', path: '/api/organizations', workflow: 'OrganizationManager', description: 'Create organization' },
+        { method: 'POST', path: '/api/members', workflow: 'OrganizationManager', description: 'Add member' },
+        { method: 'POST', path: '/api/usage', workflow: 'UsageTracker', description: 'Report usage' },
+      ],
+    }
+  } else if (templateType === 'task-manager') {
+    templateConfig = {
+      name: 'task-manager',
+      workflows: ['ProjectLogic', 'TaskHandler', 'UserSignupFlow'],
+      endpoints: [
+        { method: 'POST', path: '/api/projects', workflow: 'ProjectLogic', description: 'Create project' },
+        { method: 'POST', path: '/api/tasks', workflow: 'TaskHandler', description: 'Add task' },
+      ],
+    }
+  } else if (templateType === 'waitlist') {
+    templateConfig = {
+      name: 'waitlist',
+      workflows: ['WaitlistLogic', 'ReferralEngine', 'ScheduledAnalyticsFlow'],
+      endpoints: [
+        { method: 'POST', path: '/api/leads', workflow: 'WaitlistLogic', description: 'Join waitlist' },
+        { method: 'GET', path: '/api/stats', workflow: 'WaitlistLogic', description: 'Get stats' },
       ],
     }
   }
@@ -80,6 +102,7 @@ export const handler: Handlers['TemplateSelector'] = async (input, { logger, emi
       features: input.features,
       backendId: input.backendId,
       traceId: input.traceId,
+      baseUrl: input.baseUrl, // Pass along
     },
   })
 }

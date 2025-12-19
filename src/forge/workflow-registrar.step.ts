@@ -25,6 +25,7 @@ export const config: EventConfig = {
     })),
     backendId: z.string(),
     traceId: z.string(),
+    baseUrl: z.string(), // Added
   }),
   emits: ['workflows.registered'],
 }
@@ -46,6 +47,7 @@ export const handler: Handlers['WorkflowRegistrar'] = async (input, { logger, em
     endpointDetails,
     createdAt: new Date().toISOString(),
     status: 'registered',
+    baseUrl: input.baseUrl, // Added to metadata
   }
 
   // Save to state (simulating registration)
