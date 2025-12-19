@@ -115,8 +115,8 @@
     "id": "user-management",
     "config": {
       "src\\templates\\user-signup.step.ts": {
-        "x": -468,
-        "y": -478
+        "x": 82,
+        "y": 4555
       }
     }
   }
