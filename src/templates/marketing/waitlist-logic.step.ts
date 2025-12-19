@@ -8,9 +8,8 @@ export const config: ApiRouteConfig = {
   path: '/api/leads',
   method: 'POST',
   bodySchema: z.object({
-    email: z.string().optional(),
+    email: z.string(),
     referralCode: z.string().optional(),
-    action: z.enum(['join', 'stats']),
   }),
   responseSchema: {
     200: z.object({
@@ -25,20 +24,8 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['WaitlistLogic'] = async (req, { logger, state }) => {
-  const { email, referralCode, action } = req.body
+  const { email, referralCode } = req.body
   
-  if (action === 'stats') {
-    const totalLeads = await state.get('global', 'total_leads') || 0
-    return {
-      status: 200,
-      body: {
-        success: true,
-        message: `Current waitlist size: ${totalLeads} members.`,
-        position: totalLeads as number,
-      }
-    }
-  }
-
   logger.info('🚀 Waitlist - New signup', { email, referralCode })
 
   const currentCount = (await state.get('global', 'total_leads') as number || 0) + 1

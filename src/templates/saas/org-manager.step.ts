@@ -8,11 +8,9 @@ export const config: ApiRouteConfig = {
   path: '/api/organizations',
   method: 'POST',
   bodySchema: z.object({
-    action: z.enum(['create', 'add_member', 'remove_member']),
+    action: z.enum(['create', 'delete']),
     orgName: z.string().optional(),
     tier: z.string().optional(),
-    email: z.string().optional(),
-    role: z.string().optional(),
     orgId: z.string().optional(),
   }),
   responseSchema: {
@@ -27,7 +25,7 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['OrganizationManager'] = async (req, { logger, state }) => {
-  const { action, orgName, tier, email, role, orgId } = req.body
+  const { action, orgName, tier, orgId } = req.body
   
   logger.info(`🏢 Org Manager - Action: ${action}`, { body: req.body })
 
@@ -47,23 +45,6 @@ export const handler: Handlers['OrganizationManager'] = async (req, { logger, st
         success: true,
         message: `Organization '${orgName}' created successfully.`,
         data: orgData,
-      }
-    }
-  }
-
-  if (action === 'add_member') {
-    if (!orgId) return { status: 400, body: { success: false, message: 'orgId is required' } }
-    const org: any = await state.get('orgs', orgId)
-    if (!org) return { status: 404, body: { success: false, message: 'Organization not found' } }
-    
-    org.members.push({ email, role: role || 'member' })
-    await state.set('orgs', orgId, org)
-    
-    return {
-      status: 200,
-      body: {
-        success: true,
-        message: `Member ${email} added to ${org.name}.`,
       }
     }
   }
