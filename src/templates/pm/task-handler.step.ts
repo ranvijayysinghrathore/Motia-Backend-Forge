@@ -8,7 +8,7 @@ export const config: ApiRouteConfig = {
   path: '/api/tasks',
   method: 'POST',
   bodySchema: z.object({
-    action: z.enum(['create_task', 'update_status', 'assign']),
+    action: z.enum(['create_task', 'update_status', 'assign']).optional(),
     projectId: z.string(),
     title: z.string().optional(),
     description: z.string().optional(),
@@ -28,7 +28,8 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['TaskHandler'] = async (req, { logger, state }) => {
-  const { action, projectId, title, taskId, status } = req.body
+  const action = req.body.action || 'create_task'
+  const { projectId, title, taskId, status } = req.body
   
   logger.info(`📋 Task Handler - Action: ${action}`, { projectId, taskId })
 

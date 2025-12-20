@@ -23,15 +23,27 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['MemberManager'] = async (req, { logger, state }) => {
-  const { orgId, email, role } = req.body
+  let { orgId, email, role } = req.body
   
   logger.info('🏢 Member Manager - Adding member', { orgId, email })
 
-  const org: any = await state.get('orgs', orgId)
+  let org: any = await state.get('orgs', orgId)
+  
+  // 💡 HACKATHON BONUS: If org not found, try to find the "latest" created org
+  if (!org) {
+    logger.info('🔍 Org not found by ID, checking for latest_org_id...')
+    const latestId = await state.get('saas', 'latest_org_id') as string
+    if (latestId) {
+      logger.info(`✨ Found latest org ID: ${latestId}`)
+      org = await state.get('orgs', latestId)
+      orgId = latestId
+    }
+  }
+
   if (!org) {
     return {
       status: 404,
-      body: { success: false, message: 'Organization not found' },
+      body: { success: false, message: 'Organization not found. Please create one first.' },
     }
   }
 
@@ -43,7 +55,8 @@ export const handler: Handlers['MemberManager'] = async (req, { logger, state })
     status: 200,
     body: {
       success: true,
-      message: `Member ${email} added to ${org.name}.`,
+      orgId,
+      message: `Member ${email} added to ${org.name} (ID: ${orgId}).`,
     },
   }
 }

@@ -12,7 +12,7 @@ export const config: EventConfig = {
     description: z.string(),
     backendId: z.string(),
     traceId: z.string(),
-    baseUrl: z.string(), // Added
+    baseUrl: z.string(), 
   }),
   emits: ['intent.parsed'],
 }
@@ -22,19 +22,32 @@ export const handler: Handlers['AIIntentParser'] = async (input, { logger, emit 
     description: input.description 
   })
 
-  // Use the dedicated service for parsing
-  const intent = aiParserService.parseDescription(input.description)
+  try {
+    // Use the dedicated service for parsing
+    const intent = aiParserService.parseDescription(input.description)
 
-  logger.info('✅ Intent parsed successfully', { intent })
+    logger.info('✅ Intent parsed successfully', { intent })
 
-  // Emit parsed intent
-  await emit({
-    topic: 'intent.parsed',
-    data: {
-      ...intent,
-      backendId: input.backendId,
-      traceId: input.traceId,
-      baseUrl: input.baseUrl, // Pass along
-    },
-  })
+    // Emit parsed intent
+    await emit({
+      topic: 'intent.parsed',
+      data: {
+        ...intent,
+        backendId: input.backendId,
+        traceId: input.traceId,
+        baseUrl: input.baseUrl, // Pass along
+      },
+    })
+  } catch (error) {
+    logger.error('❌ AI Intent Parser Error', { error })
+    await emit({
+      topic: 'workflow.failed',
+      data: {
+        backendId: input.backendId,
+        stepName: 'AIIntentParser',
+        error: error instanceof Error ? error.message : 'Unknown error',
+        traceId: input.traceId,
+      },
+    })
+  }
 }

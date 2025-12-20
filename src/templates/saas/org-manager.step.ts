@@ -8,8 +8,9 @@ export const config: ApiRouteConfig = {
   path: '/api/organizations',
   method: 'POST',
   bodySchema: z.object({
-    action: z.enum(['create', 'delete']),
+    action: z.enum(['create', 'delete']).optional(),
     orgName: z.string().optional(),
+    name: z.string().optional(), // Alias for orgName from metadata
     tier: z.string().optional(),
     orgId: z.string().optional(),
   }),
@@ -25,7 +26,9 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['OrganizationManager'] = async (req, { logger, state }) => {
-  const { action, orgName, tier, orgId } = req.body
+  const action = req.body.action || 'create'
+  const orgName = req.body.orgName || req.body.name
+  const { tier, orgId } = req.body
   
   logger.info(`🏢 Org Manager - Action: ${action}`, { body: req.body })
 
@@ -39,6 +42,7 @@ export const handler: Handlers['OrganizationManager'] = async (req, { logger, st
       createdAt: new Date().toISOString(),
     }
     await state.set('orgs', newId, orgData)
+    await state.set('saas', 'latest_org_id', newId) // 🚀 Track latest for easy demoing
     return {
       status: 200,
       body: {

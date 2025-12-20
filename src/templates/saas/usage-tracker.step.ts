@@ -23,9 +23,20 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['UsageTracker'] = async (req, { logger, state }) => {
-  const { orgId, feature, quantity } = req.body
+  let { orgId, feature, quantity } = req.body
   
   logger.info('📊 Usage Tracker - Reporting usage', { orgId, feature, quantity })
+
+  // 💡 HACKATHON BONUS: If org not found, try to find the "latest" created org
+  const orgExists = await state.get('orgs', orgId)
+  if (!orgExists) {
+    logger.info('🔍 Org ID not found, checking for latest_org_id...')
+    const latestId = await state.get('saas', 'latest_org_id') as string
+    if (latestId) {
+      logger.info(`✨ Usage resolved to latest org: ${latestId}`)
+      orgId = latestId
+    }
+  }
 
   const usageKey = `usage:${orgId}:${feature}`
   const currentUsage = (await state.get('usage', usageKey) as number || 0) + quantity
@@ -35,7 +46,8 @@ export const handler: Handlers['UsageTracker'] = async (req, { logger, state }) 
     status: 200,
     body: {
       success: true,
-      message: `Usage reported for ${feature}. Total: ${currentUsage}`,
+      orgId,
+      message: `Usage reported for ${feature} (Org ID: ${orgId}). Total: ${currentUsage}`,
     },
   }
 }

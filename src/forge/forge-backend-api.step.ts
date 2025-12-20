@@ -38,8 +38,9 @@ export const handler: Handlers['ForgeBackendApi'] = async (req, { logger, emit, 
     const backendId = `backend-${Date.now()}-${Math.random().toString(36).substring(7)}`
 
     // Detect Base URL from request headers
-    const host = req.headers['host']
-    const protocol = req.headers['x-forwarded-proto'] || 'https'
+    const host = req.headers['host'] || ''
+    const isLocal = host.includes('localhost') || host.includes('127.0.0.1')
+    const protocol = req.headers['x-forwarded-proto'] || (isLocal ? 'http' : 'https')
     const baseUrl = process.env.BASE_URL || (host ? `${protocol}://${host}` : 'http://localhost:3000')
 
     // Emit event to start the workflow
@@ -79,9 +80,9 @@ export const handler: Handlers['ForgeBackendApi'] = async (req, { logger, emit, 
     else if (templateType === 'saas') {
       endpoints = ['POST /api/organizations', 'POST /api/members', 'POST /api/usage']
       endpointDetails = [
-        { method: 'POST', path: '/api/organizations', description: 'Create a new organization/team', body: { name: 'Acme Corp', tier: 'pro' } },
-        { method: 'POST', path: '/api/members', description: 'Add member to organization', body: { orgId: 'org_556', email: 'dev@acme.com', role: 'admin' } },
-        { method: 'POST', path: '/api/usage', description: 'Report feature usage for billing', body: { orgId: 'org_556', feature: 'api_calls', quantity: 150 } },
+        { method: 'POST', path: '/api/organizations', description: 'Create an organization (Note: system auto-detects the latest org for subsequent steps)', body: { name: 'Acme Corp', tier: 'pro' } },
+        { method: 'POST', path: '/api/members', description: 'Add member (Uses latest org if orgId is a placeholder)', body: { orgId: 'org_placeholder', email: 'dev@acme.com', role: 'admin' } },
+        { method: 'POST', path: '/api/usage', description: 'Report usage (Uses latest org if orgId is a placeholder)', body: { orgId: 'org_placeholder', feature: 'api_calls', quantity: 150 } },
       ]
     }
     // 📋 Task Management

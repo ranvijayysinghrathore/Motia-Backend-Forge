@@ -19,9 +19,9 @@ declare module 'motia' {
     'CreateEntity': ApiRouteHandler<{ title: string; content: string; authorId: string }, ApiResponse<201, { id: string; title: string; content: string; authorId: string; createdAt: string }> | ApiResponse<400, { error: string }>, { topic: 'entity.created'; data: { entityId: string; entityType: string; authorId: string } }>
     'BackgroundProcessor': EventHandler<{ entityId: string; entityType: string; authorId: string }, never>
     'UsageTracker': ApiRouteHandler<{ orgId: string; feature: string; quantity: unknown }, ApiResponse<200, { success: boolean; message: string }>, never>
-    'OrganizationManager': ApiRouteHandler<{ action: 'create' | 'delete'; orgName?: string; tier?: string; orgId?: string }, ApiResponse<200, { success: boolean; message: string; data?: unknown }>, never>
+    'OrganizationManager': ApiRouteHandler<{ action?: 'create' | 'delete'; orgName?: string; name?: string; tier?: string; orgId?: string }, ApiResponse<200, { success: boolean; message: string; data?: unknown }>, never>
     'MemberManager': ApiRouteHandler<{ orgId: string; email: string; role?: string }, ApiResponse<200, { success: boolean; message: string }>, never>
-    'TaskHandler': ApiRouteHandler<{ action: 'create_task' | 'update_status' | 'assign'; projectId: string; title?: string; description?: string; priority?: string; taskId?: string; status?: string }, ApiResponse<200, { success: boolean; taskId?: string; message: string }>, never>
+    'TaskHandler': ApiRouteHandler<{ action?: 'create_task' | 'update_status' | 'assign'; projectId: string; title?: string; description?: string; priority?: string; taskId?: string; status?: string }, ApiResponse<200, { success: boolean; taskId?: string; message: string }>, never>
     'ProjectLogic': ApiRouteHandler<{ name: string; color?: string; description?: string }, ApiResponse<200, { success: boolean; projectId: string; message: string }>, never>
     'WaitlistStats': ApiRouteHandler<unknown, ApiResponse<200, { success: boolean; totalLeads: number; message: string }>, never>
     'WaitlistLogic': ApiRouteHandler<{ email: string; referralCode?: string }, ApiResponse<200, { success: boolean; position?: number; referralLink?: string; message: string }>, never>
@@ -33,6 +33,8 @@ declare module 'motia' {
     'ForgeBackendApi': ApiRouteHandler<{ description: string }, ApiResponse<200, { backendUrl: string; endpoints: Array<string>; endpointDetails: Array<unknown>; templateType: string; backendId: string }> | ApiResponse<400, { error: string }>, { topic: 'project.description.received'; data: { description: string; backendId: string; traceId: string; baseUrl: string } }>
     'CloudDeployer': EventHandler<{ backendId: string; metadata: { id: string; workflows: Array<unknown>; endpoints: Array<string>; endpointDetails: Array<unknown>; createdAt: string; status: string; baseUrl: string }; traceId: string }, never>
     'AIIntentParser': EventHandler<{ description: string; backendId: string; traceId: string; baseUrl: string }, { topic: 'intent.parsed'; data: { entities: Array<string>; features: Array<string>; templateType: string; originalDescription: string; backendId: string; traceId: string; baseUrl: string } }>
+    'WelcomeStep': ApiRouteHandler<Record<string, unknown>, ApiResponse<200, { name: string; status: string; version: string; message: string; links: { forge: string; docs: string } }>, never>
+    'FailureNotifier': EventHandler<{ backendId: string; stepName: string; error: string; traceId: string }, never>
   }
     
 }

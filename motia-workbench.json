@@ -61,35 +61,6 @@
     }
   },
   {
-    "id": "forge-backend",
-    "config": {
-      "src\\forge\\workflow-registrar.step.ts": {
-        "x": 1091,
-        "y": 136
-      },
-      "src\\forge\\workflow-assembler.step.ts": {
-        "x": 1080,
-        "y": -101
-      },
-      "src\\forge\\template-selector.step.ts": {
-        "x": 431,
-        "y": 140
-      },
-      "src\\forge\\forge-backend-api.step.ts": {
-        "x": -226,
-        "y": 10
-      },
-      "src\\forge\\ai-intent-parser.step.ts": {
-        "x": 431,
-        "y": -104
-      },
-      "src\\forge\\cloud-deployer.step.ts": {
-        "x": 1750,
-        "y": 44
-      }
-    }
-  },
-  {
     "id": "entity-management",
     "config": {
       "src\\templates\\get-entities.step.ts": {
@@ -117,6 +88,39 @@
       "src\\templates\\user-signup.step.ts": {
         "x": 82,
         "y": 4555
+      }
+    }
+  },
+  {
+    "id": "forge-backend",
+    "config": {
+      "src\\forge\\workflow-registrar.step.ts": {
+        "x": 1048,
+        "y": 197
+      },
+      "src\\forge\\workflow-assembler.step.ts": {
+        "x": 935,
+        "y": -66
+      },
+      "src\\forge\\template-selector.step.ts": {
+        "x": 431,
+        "y": 140
+      },
+      "src\\forge\\forge-backend-api.step.ts": {
+        "x": -230,
+        "y": 4
+      },
+      "src\\forge\\cloud-deployer.step.ts": {
+        "x": 1428,
+        "y": 2
+      },
+      "src\\forge\\ai-intent-parser.step.ts": {
+        "x": 263,
+        "y": -77
+      },
+      "src\\forge\\failure-notifier.step.ts": {
+        "x": 16,
+        "y": 259
       }
     }
   }
