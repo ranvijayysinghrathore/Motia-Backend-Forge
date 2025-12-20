@@ -9,11 +9,10 @@ export const config: ApiRouteConfig = {
   method: 'POST',
   path: '/api/orders',
   bodySchema: z.object({
-    items: z.array(z.object({
-      productId: z.string(),
-      quantity: z.number().positive(),
-    })),
-    customerId: z.string(),
+    productId: z.string(),
+    quantity: z.number().positive(),
+    customerId: z.string().optional(),
+    shippingAddress: z.string().optional(),
   }),
   responseSchema: {
     201: z.object({
@@ -26,16 +25,18 @@ export const config: ApiRouteConfig = {
 }
 
 export const handler: Handlers['OrderProcessing'] = async (req, { logger, emit, state }) => {
-  logger.info('🛒 Order Processing - Receiving new order', { customerId: req.body.customerId })
+  logger.info('🛒 Order Processing - Receiving new order', { productId: req.body.productId })
   
   const orderId = `order-${Date.now()}`
-  // Mock total calculation
-  const total = req.body.items.length * 99.99 
+  // Mock total calculation (100 per unit for simplicity)
+  const total = req.body.quantity * 100 
   
   const order = {
     id: orderId,
-    customerId: req.body.customerId,
-    items: req.body.items,
+    productId: req.body.productId,
+    quantity: req.body.quantity,
+    customerId: req.body.customerId || 'anonymous',
+    shippingAddress: req.body.shippingAddress || 'N/A',
     total,
     status: 'pending',
     createdAt: new Date().toISOString()
