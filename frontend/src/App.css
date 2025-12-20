@@ -832,6 +832,7 @@ h3,
   border-color: var(--accent);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-glow);
   z-index: 10;
+  scale: 1.1;
 }
 
 .visual-item img {
