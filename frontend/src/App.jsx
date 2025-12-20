@@ -3,12 +3,14 @@ import InputScreen from './components/InputScreen'
 import LoadingScreen from './components/LoadingScreen'
 import ResultScreen from './components/ResultScreen'
 import DocsScreen from './components/DocsScreen'
+import HomePage from './components/HomePage'
+import AntigravityBackground from './components/AntigravityBackground'
 import './App.css'
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000'
 
 function App() {
-  const [view, setView] = useState('forge') // forge, docs
+  const [view, setView] = useState('home') // home, forge, docs
   const [state, setState] = useState('idle') // idle, loading, success, error
   const [description, setDescription] = useState('')
   const [result, setResult] = useState(null)
@@ -39,12 +41,6 @@ function App() {
         throw new Error(data.error || 'Failed to generate backend')
       }
 
-      // 🛡️ Frontend Resiliency: If backend returns localhost but we are in cloud, fix it!
-      if (data.backendUrl.includes('localhost') && API_BASE_URL.includes('.motia.cloud')) {
-        console.log('🔄 Fixing incorrect localhost URL returned by backend')
-        data.backendUrl = API_BASE_URL.replace('/forge-backend', '').replace(/\/$/, '')
-      }
-
       setResult(data)
       setState('success')
     } catch (err) {
@@ -63,11 +59,18 @@ function App() {
 
   return (
     <div className="app">
+      <AntigravityBackground />
       <header className="main-header">
-        <a href="/" className="logo" onClick={(e) => { e.preventDefault(); setView('forge'); handleReset(); }}>
+        <a href="/" className="logo" onClick={(e) => { e.preventDefault(); setView('home'); handleReset(); }}>
           <span className="logo-icon">⚒️</span> Backend Forge
         </a>
         <nav className="nav-links">
+          <span 
+            className={`nav-link ${view === 'home' ? 'active' : ''}`}
+            onClick={() => setView('home')}
+          >
+            Home
+          </span>
           <span 
             className={`nav-link ${view === 'forge' ? 'active' : ''}`}
             onClick={() => setView('forge')}
@@ -84,7 +87,9 @@ function App() {
       </header>
 
       <main className="screen-container">
-        {view === 'forge' ? (
+        {view === 'home' ? (
+          <HomePage onStart={() => setView('forge')} />
+        ) : view === 'forge' ? (
           <>
             {state === 'idle' && (
               <InputScreen
