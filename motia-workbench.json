@@ -95,20 +95,24 @@
     "id": "forge-backend",
     "config": {
       "src\\forge\\workflow-registrar.step.ts": {
-        "x": 1048,
-        "y": 197
+        "x": 1057,
+        "y": 201
       },
       "src\\forge\\workflow-assembler.step.ts": {
-        "x": 935,
-        "y": -66
+        "x": 897,
+        "y": -73
       },
       "src\\forge\\template-selector.step.ts": {
-        "x": 431,
-        "y": 140
+        "x": 428,
+        "y": 143
       },
       "src\\forge\\forge-backend-api.step.ts": {
         "x": -230,
         "y": 4
+      },
+      "src\\forge\\failure-notifier.step.ts": {
+        "x": 16,
+        "y": 259
       },
       "src\\forge\\cloud-deployer.step.ts": {
         "x": 1428,
@@ -117,10 +121,6 @@
       "src\\forge\\ai-intent-parser.step.ts": {
         "x": 263,
         "y": -77
-      },
-      "src\\forge\\failure-notifier.step.ts": {
-        "x": 16,
-        "y": 259
       }
     }
   }

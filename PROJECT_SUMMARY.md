@@ -285,6 +285,10 @@ backend-forge/
 7. **Open Workbench** at http://localhost:3000
 8. **Show workflow visualization**
 9. **Demonstrate observability**
+10. **Closing & AI Disclosure**:
+    - Mention use of **Antigravity**, **Gemini 3**, and **Claude/ChatGPT**
+    - Emphasize that all thinking and decisions were human-driven
+    - Highlight speed and efficiency gains
 
 ---
 

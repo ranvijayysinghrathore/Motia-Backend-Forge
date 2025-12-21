@@ -363,4 +363,15 @@ Built with [Motia](https://motia.dev) - the unified backend framework.
 
 ---
 
+### 🤖 AI-Assisted Development
+
+This project was built with the speed and assistance of modern AI tools:
+- **Antigravity** (Primary Coding Assistant)
+- **Gemini 3**
+- **Claude 3.5 Sonnet / ChatGPT**
+
+**Important Note:** While these AI tools were used for fast prototyping, assisted coding, and boilerplate generation, **all architectural thinking, logic design, and final decisions were made by the developer.** These tools acted as a powerful multiplier for human creativity and decision-making.
+
+---
+
 **Happy Forging! 🔥**
